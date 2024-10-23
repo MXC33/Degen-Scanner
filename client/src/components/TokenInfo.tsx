@@ -64,18 +64,6 @@ const styles = {
       backgroundColor: '#b6323b',
     },
   },
-  disabledButton: {
-    backgroundColor: '#a0aec0',
-    cursor: 'not-allowed',
-  },
-  loader: {
-    border: '4px solid #f3f3f3',
-    borderRadius: '50%',
-    borderTop: '4px solid #3498db',
-    width: '30px',
-    height: '30px',
-    animation: 'spin 2s linear infinite',
-  },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -89,11 +77,15 @@ const styles = {
     padding: '15px',
     textAlign: 'center',
     width: '250px',
+    cursor: 'pointer',
     transition: 'transform 0.2s, box-shadow 0.2s',
     '&:hover': {
       transform: 'scale(1.05)',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
     },
+  },
+  selectedCard: {
+    border: '2px solid #e63946',
   },
   tokenInfoImage: {
     width: '100%',
@@ -115,6 +107,26 @@ const styles = {
     color: '#3490dc',
     fontSize: '12px',
   },
+  combinedBox: {
+    backgroundColor: '#444',
+    color: 'white',
+    padding: '20px',
+    borderRadius: '8px',
+    marginBottom: '20px',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  combinedImages: {
+    display: 'flex',
+    gap: '10px',
+  },
+  combinedImage: {
+    width: '50px',
+    height: '50px',
+    borderRadius: '50%',
+  },
 };
 
 export default function TokenInfo() {
@@ -122,7 +134,7 @@ export default function TokenInfo() {
   const [tokens, setTokens] = useState<TokenInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [selectedTokens, setSelectedTokens] = useState<TokenInfo[]>([]);
 
   const fetchTokenInfo = async (address: string) => {
     setLoading(true);
@@ -158,9 +170,25 @@ export default function TokenInfo() {
     fetchTokenInfo(mintAddress);
   };
 
+  const handleTokenSelect = (info: TokenInfo) => {
+    if (selectedTokens.includes(info)) {
+      // Deselect token
+      setSelectedTokens((prevSelected) => prevSelected.filter((t) => t !== info));
+    } else if (selectedTokens.length < 2) {
+      // Select token if less than 2 are selected
+      setSelectedTokens((prevSelected) => [...prevSelected, info]);
+    }
+  };
+
   const renderTokenInfo = (info: TokenInfo) => {
+    const isSelected = selectedTokens.includes(info);
+
     return (
-      <div style={styles.card} key={info.mintAddress}>
+      <div
+        style={{ ...styles.card, ...(isSelected ? styles.selectedCard : {}) }}
+        key={info.mintAddress}
+        onClick={() => handleTokenSelect(info)}
+      >
         {info.metadata.image && (
           <img
             src={info.metadata.image}
@@ -171,25 +199,42 @@ export default function TokenInfo() {
         <p><strong>${info.metadata.symbol}</strong></p>
         <p>{info.metadata.name}</p>
         <p>Holders: {info.holderCount}</p>
-        <p style={styles.description}>
-          {showFullDescription ? info.metadata.description : `${info.metadata.description.slice(0, 50)}...`}
-          {info.metadata.description.length > 50 && (
-            <span
-              style={styles.readMore}
-              onClick={() => setShowFullDescription(!showFullDescription)}
-            >
-              {showFullDescription ? " Show less" : " Read more"}
-            </span>
-          )}
-        </p>
       </div>
     );
+  };
+
+  const renderCombinedInfo = () => {
+    if (selectedTokens.length === 1) {
+      return (
+        <div style={styles.combinedBox}>
+          <p>Select another token to see total holders.</p>
+        </div>
+      );
+    }
+
+    if (selectedTokens.length === 2) {
+      const [token1, token2] = selectedTokens;
+      const combinedHolders = token1.holderCount + token2.holderCount;
+
+      return (
+        <div style={styles.combinedBox}>
+          <div style={styles.combinedImages}>
+            <img src={token1.metadata.image} alt={token1.metadata.name} style={styles.combinedImage} />
+            <img src={token2.metadata.image} alt={token2.metadata.name} style={styles.combinedImage} />
+          </div>
+          <p>
+            <strong>{token1.metadata.symbol}</strong> + <strong>{token2.metadata.symbol}</strong> together have{" "}
+            <strong>{combinedHolders}</strong> holders.
+          </p>
+        </div>
+      );
+    }
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.hero}>
-        <h1 style={styles.heroTitle}>DEGEN ANALYTICS 101</h1>
+        <h1 style={styles.heroTitle}>Token Information</h1>
         <input
           type="text"
           value={mintAddress}
@@ -206,11 +251,7 @@ export default function TokenInfo() {
               ...(loading ? styles.disabledButton : styles.redButton),
             }}
           >
-            {loading ? (
-              <div style={styles.loader}></div>
-            ) : (
-              "Fetch Token"
-            )}
+            {loading ? "Loading..." : "Fetch Token"}
           </button>
         </div>
 
@@ -221,6 +262,8 @@ export default function TokenInfo() {
           </div>
         )}
       </div>
+
+      {renderCombinedInfo()}
 
       <div style={styles.grid}>
         {tokens.map(renderTokenInfo)}
