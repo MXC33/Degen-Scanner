@@ -189,7 +189,7 @@ export default function TokenInfo() {
   return (
     <div style={styles.container}>
       <div style={styles.hero}>
-        <h1 style={styles.heroTitle}>Token Information</h1>
+        <h1 style={styles.heroTitle}>DEGEN ANALYTICS 101</h1>
         <input
           type="text"
           value={mintAddress}
