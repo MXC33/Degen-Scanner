@@ -1,5 +1,7 @@
 import React from 'react';
 import TokenInfo from './components/TokenInfo.tsx';
+import './App.css';
+
 
 function App() {
   return (

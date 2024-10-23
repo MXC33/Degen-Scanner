@@ -18,82 +18,117 @@ const styles = {
     padding: '20px',
     fontFamily: 'Arial, sans-serif',
   },
-  card: {
-    backgroundColor: 'white',
+  hero: {
+    backgroundColor: '#1e1e1e',
     borderRadius: '8px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-    marginBottom: '20px',
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.4)',
+    padding: '40px',
+    textAlign: 'center',
+    marginBottom: '30px',
   },
-  title: {
-    fontSize: '24px',
+  heroTitle: {
+    fontSize: '32px',
     fontWeight: 'bold',
+    color: 'white',
     marginBottom: '20px',
   },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    marginBottom: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '4px',
+  heroInput: {
+    width: '80%',
+    padding: '15px',
+    fontSize: '18px',
+    marginBottom: '20px',
+    border: '2px solid #ccc',
+    borderRadius: '8px',
+    backgroundColor: '#333',
+    color: '#fff',
   },
   buttonContainer: {
     display: 'flex',
+    justifyContent: 'center',
     gap: '10px',
     marginBottom: '20px',
   },
   button: {
     flex: 1,
-    padding: '10px',
-    fontSize: '16px',
+    padding: '12px 20px',
+    fontSize: '18px',
     color: 'white',
     border: 'none',
-    borderRadius: '4px',
+    borderRadius: '6px',
     cursor: 'pointer',
+    transition: 'all 0.2s',
   },
-  blueButton: {
-    backgroundColor: '#3490dc',
-  },
-  greenButton: {
-    backgroundColor: '#38a169',
+  redButton: {
+    backgroundColor: '#e63946',
+    '&:hover': {
+      backgroundColor: '#b6323b',
+    },
   },
   disabledButton: {
     backgroundColor: '#a0aec0',
     cursor: 'not-allowed',
   },
-  error: {
-    backgroundColor: '#fed7d7',
-    borderColor: '#f56565',
-    color: '#c53030',
-    padding: '12px',
-    borderRadius: '4px',
-    marginBottom: '20px',
+  loader: {
+    border: '4px solid #f3f3f3',
+    borderRadius: '50%',
+    borderTop: '4px solid #3498db',
+    width: '30px',
+    height: '30px',
+    animation: 'spin 2s linear infinite',
   },
-  tokenInfoGrid: {
+  grid: {
     display: 'grid',
-    gridTemplateColumns: '1fr',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '20px',
+  },
+  card: {
+    backgroundColor: '#333',
+    color: 'white',
+    borderRadius: '8px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
+    padding: '15px',
+    textAlign: 'center',
+    width: '250px',
+    transition: 'transform 0.2s, box-shadow 0.2s',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
+    },
   },
   tokenInfoImage: {
     width: '100%',
     height: 'auto',
     borderRadius: '4px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    marginBottom: '5px',
+  },
+  description: {
+    fontSize: '12px',
+    marginTop: '10px',
+    textAlign: 'left',
+    maxHeight: '60px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  readMore: {
+    cursor: 'pointer',
+    color: '#3490dc',
+    fontSize: '12px',
   },
 };
 
 export default function TokenInfo() {
   const [mintAddress, setMintAddress] = useState("");
-  const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null);
-  const [secondTokenInfo, setSecondTokenInfo] = useState<TokenInfo | null>(null);
+  const [tokens, setTokens] = useState<TokenInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
-
-  const fetchTokenInfo = async (address: string, setInfo: React.Dispatch<React.SetStateAction<TokenInfo | null>>) => {
+  const fetchTokenInfo = async (address: string) => {
     setLoading(true);
     setError(null);
+    setMintAddress(""); // Clear input after fetching
+
     try {
       const response = await fetch(`http://localhost:3000/api/token-info/${address}`);
       if (!response.ok) {
@@ -101,97 +136,81 @@ export default function TokenInfo() {
         throw new Error(errorData.error || "Failed to fetch token information");
       }
       const data = await response.json();
-      console.log("API Response Data:", data);  // Log the data to check if fields are correctly returned
-  
-      const tokenData = {
+      const tokenData: TokenInfo = {
         mintAddress: data.mintAddress || address,
-        holderCount: data.holderCount || "Unknown", 
+        holderCount: data.holderCount || "Unknown",
         metadata: {
-          name: data.metadata.name || "Unknown",  
-          symbol: data.metadata.symbol || "Unknown",  
-          description: data.metadata.description || "No Description", 
-          image: data.metadata.image || "",  // Image will now contain the correct link
+          name: data.metadata.name || "Unknown",
+          symbol: data.metadata.symbol || "Unknown",
+          description: data.metadata.description || "No Description",
+          image: data.metadata.image || "",
         },
       };
-      
-      setInfo(tokenData);
+      setTokens((prevTokens) => [...prevTokens, tokenData]);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
       setLoading(false);
     }
   };
-  
-      
-  
-  
 
-  const handleFetchFirstToken = () => fetchTokenInfo(mintAddress, setTokenInfo);
-  const handleFetchSecondToken = () => {
-    if (tokenInfo) {
-      fetchTokenInfo(mintAddress, setSecondTokenInfo);
-    }
+  const handleFetchToken = () => {
+    fetchTokenInfo(mintAddress);
   };
 
-  const renderTokenInfo = (info: TokenInfo | null, title: string) => {
-    if (!info) return null;
+  const renderTokenInfo = (info: TokenInfo) => {
     return (
-      <div style={styles.card}>
-        <h2 style={styles.title}>{title}</h2>
-        <div style={styles.tokenInfoGrid}>
-          <div>
-            <p><strong>Name:</strong> {info.metadata.name}</p>
-            <p><strong>Symbol:</strong> {info.metadata.symbol}</p>
-            <p><strong>Mint Address:</strong> {info.mintAddress}</p>
-            <p><strong>Holder Count:</strong> {info.holderCount}</p>
-            <p><strong>Description:</strong> {info.metadata.description}</p>
-          </div>
-          <div>
-            {info.metadata.image && (
-              <img
-                src={info.metadata.image}
-                alt={info.metadata.name}
-                style={styles.tokenInfoImage}
-              />
-            )}
-          </div>
-        </div>
+      <div style={styles.card} key={info.mintAddress}>
+        {info.metadata.image && (
+          <img
+            src={info.metadata.image}
+            alt={info.metadata.name}
+            style={styles.tokenInfoImage}
+          />
+        )}
+        <p><strong>${info.metadata.symbol}</strong></p>
+        <p>{info.metadata.name}</p>
+        <p>Holders: {info.holderCount}</p>
+        <p style={styles.description}>
+          {showFullDescription ? info.metadata.description : `${info.metadata.description.slice(0, 50)}...`}
+          {info.metadata.description.length > 50 && (
+            <span
+              style={styles.readMore}
+              onClick={() => setShowFullDescription(!showFullDescription)}
+            >
+              {showFullDescription ? " Show less" : " Read more"}
+            </span>
+          )}
+        </p>
       </div>
     );
   };
-  
 
   return (
     <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>Token Information</h1>
+      <div style={styles.hero}>
+        <h1 style={styles.heroTitle}>Token Information</h1>
         <input
           type="text"
           value={mintAddress}
           onChange={(e) => setMintAddress(e.target.value)}
           placeholder="Enter mint address (32-44 characters)"
-          style={styles.input}
+          style={styles.heroInput}
         />
         <div style={styles.buttonContainer}>
           <button
-            onClick={handleFetchFirstToken}
+            onClick={handleFetchToken}
             disabled={loading}
             style={{
               ...styles.button,
-              ...(loading ? styles.disabledButton : styles.blueButton),
+              ...(loading ? styles.disabledButton : styles.redButton),
             }}
           >
-            {loading ? "Loading..." : "Fetch First Token"}
-          </button>
-          <button
-            onClick={handleFetchSecondToken}
-            disabled={loading || !tokenInfo}
-            style={{
-              ...styles.button,
-              ...(loading || !tokenInfo ? styles.disabledButton : styles.greenButton),
-            }}
-          >
-            Fetch Second Token
+            {loading ? (
+              <div style={styles.loader}></div>
+            ) : (
+              "Fetch Token"
+            )}
           </button>
         </div>
 
@@ -203,8 +222,9 @@ export default function TokenInfo() {
         )}
       </div>
 
-      {renderTokenInfo(tokenInfo, "First Token Information")}
-      {renderTokenInfo(secondTokenInfo, "Second Token Information")}
+      <div style={styles.grid}>
+        {tokens.map(renderTokenInfo)}
+      </div>
     </div>
   );
 }
