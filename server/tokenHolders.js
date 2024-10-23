@@ -40,9 +40,15 @@ async function getTokenHolders(apiKey, mintAddress) {
     });
 
     cursor = data.result.cursor;
+    if (!cursor) {
+      break;
+    }
   }
 
-  return allOwners.size;
+  return {
+    holderCount: allOwners.size,
+    holders: Array.from(allOwners),
+  };
 }
 
 async function getTokenMetadata(apiKey, mintAddress) {
@@ -75,24 +81,37 @@ async function getTokenMetadata(apiKey, mintAddress) {
       const metadata = data[0];
 
       let image = metadata.offChainMetadata?.metadata?.image || "No Image";
-      const ipfsUri = metadata.onChainMetadata?.metadata?.data?.uri || metadata.offChainMetadata?.uri;
+      const ipfsUri =
+        metadata.onChainMetadata?.metadata?.data?.uri ||
+        metadata.offChainMetadata?.uri;
 
       // If the IPFS link exists and is JSON, fetch the content from that link
-      if (ipfsUri && ipfsUri.includes('ipfs.io')) {
-        const ipfsResponse = await fetch(ipfsUri);
-        const ipfsData = await ipfsResponse.json();
-        
-        // Check if the IPFS JSON has an image field
-        if (ipfsData.image) {
-          image = ipfsData.image;
+      if (ipfsUri && ipfsUri.includes("ipfs.io")) {
+        try {
+          const ipfsResponse = await fetch(ipfsUri);
+          const ipfsData = await ipfsResponse.json();
+
+          // Check if the IPFS JSON has an image field
+          if (ipfsData.image) {
+            image = ipfsData.image;
+          }
+        } catch (ipfsError) {
+          console.error("Error fetching IPFS data:", ipfsError);
         }
       }
 
       return {
-        name: metadata.onChainMetadata?.metadata?.data?.name || metadata.offChainMetadata?.metadata?.name || "Unknown",
-        symbol: metadata.onChainMetadata?.metadata?.data?.symbol || metadata.offChainMetadata?.metadata?.symbol || "Unknown",
+        name:
+          metadata.onChainMetadata?.metadata?.data?.name ||
+          metadata.offChainMetadata?.metadata?.name ||
+          "Unknown",
+        symbol:
+          metadata.onChainMetadata?.metadata?.data?.symbol ||
+          metadata.offChainMetadata?.metadata?.symbol ||
+          "Unknown",
         image: image,
-        description: metadata.offChainMetadata?.metadata?.description || "No Description",
+        description:
+          metadata.offChainMetadata?.metadata?.description || "No Description",
       };
     }
 
@@ -108,5 +127,17 @@ async function getTokenMetadata(apiKey, mintAddress) {
   }
 }
 
+async function getTokenInfo(apiKey, mintAddress) {
+  const [tokenHoldersResult, metadata] = await Promise.all([
+    getTokenHolders(apiKey, mintAddress),
+    getTokenMetadata(apiKey, mintAddress),
+  ]);
 
-module.exports = { getTokenHolders, getTokenMetadata };
+  return {
+    holders: tokenHoldersResult.holders,
+    holderCount: tokenHoldersResult.holderCount,
+    metadata: metadata,
+  };
+}
+
+module.exports = { getTokenHolders, getTokenMetadata, getTokenInfo };
