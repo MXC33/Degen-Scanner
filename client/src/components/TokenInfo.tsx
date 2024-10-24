@@ -62,12 +62,9 @@ const styles = {
   },
   redButton: {
     backgroundColor: "#e63946",
-    "&:hover": {
-      backgroundColor: "#b6323b",
-    },
   },
   disabledButton: {
-    backgroundColor: "#a0aec0",
+    backgroundColor: "#b6323b",
     cursor: "not-allowed",
   },
   grid: {
@@ -85,11 +82,7 @@ const styles = {
     width: "250px",
     cursor: "pointer",
     transition: "transform 0.2s, box-shadow 0.2s",
-    position: "relative", // Add position relative to position the remove button
-    "&:hover": {
-      transform: "scale(1.05)",
-      boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)",
-    },
+    position: "relative",
   },
   selectedCard: {
     border: "2px solid #e63946",
@@ -154,7 +147,7 @@ const styles = {
     color: "#c53030",
     padding: "12px",
     borderRadius: "4px",
-    marginBottom: "20px",
+    marginTop: "20px",
   },
 };
 
@@ -202,7 +195,9 @@ export default function TokenInfo() {
   };
 
   const handleFetchToken = () => {
-    fetchTokenInfo(mintAddress);
+    if (mintAddress.trim() !== "") {
+      fetchTokenInfo(mintAddress);
+    }
   };
 
   const handleTokenSelect = async (info: TokenInfo) => {
@@ -290,7 +285,7 @@ export default function TokenInfo() {
           />
         )}
         <p>
-          <strong>${info.metadata.symbol}</strong>
+          <strong>{info.metadata.symbol}</strong>
         </p>
         <p>{info.metadata.name}</p>
         <p>Holders: {info.holderCount}</p>
@@ -336,6 +331,7 @@ export default function TokenInfo() {
         </div>
       );
     }
+    return null;
   };
 
   return (
@@ -352,10 +348,10 @@ export default function TokenInfo() {
         <div style={styles.buttonContainer}>
           <button
             onClick={handleFetchToken}
-            disabled={loading || !mintAddress}
+            disabled={loading || mintAddress.trim() === ""}
             style={{
               ...styles.button,
-              ...(loading || !mintAddress
+              ...(loading || mintAddress.trim() === ""
                 ? styles.disabledButton
                 : styles.redButton),
             }}
