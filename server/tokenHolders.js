@@ -2,55 +2,71 @@
 
 const fetch = require("node-fetch");
 
+// Solana's Token Program ID (SPL Token Program)
+const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+
 async function getTokenHolders(apiKey, mintAddress) {
-  const url = `https://mainnet.helius-rpc.com/?api-key=${apiKey}`;
-  let allOwners = new Set();
-  let cursor;
+  const url = `https://rpc.helius.xyz/?api-key=${apiKey}`;
 
-  while (true) {
-    let params = {
-      limit: 1000,
-      mint: mintAddress,
+  try {
+    const requestBody = {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getProgramAccounts",
+      params: [
+        TOKEN_PROGRAM_ID,
+        {
+          encoding: "jsonParsed",
+          filters: [
+            {
+              dataSize: 165, // Size of SPL Token Account
+            },
+            {
+              memcmp: {
+                offset: 0, // Mint address starts at offset 0
+                bytes: mintAddress,
+              },
+            },
+          ],
+        },
+      ],
     };
-
-    if (cursor != undefined) {
-      params.cursor = cursor;
-    }
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: "helius-test",
-        method: "getTokenAccounts",
-        params: params,
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     const data = await response.json();
 
-    if (!data.result || data.result.token_accounts.length === 0) {
-      console.log("No more results");
-      break;
+    if (data.error) {
+      throw new Error(`RPC Error: ${data.error.message}`);
     }
 
-    data.result.token_accounts.forEach((account) => {
-      allOwners.add(account.owner);
-    });
+    const accounts = data.result;
 
-    cursor = data.result.cursor;
-    if (!cursor) {
-      break;
-    }
+    // Extract owners from the accounts
+    const holders = accounts
+      .filter((account) => {
+        const amount = account.account.data.parsed.info.tokenAmount.uiAmount;
+        return amount > 0;
+      })
+      .map((account) => account.account.data.parsed.info.owner);
+
+    // Remove duplicates
+    const uniqueHolders = [...new Set(holders)];
+
+    return {
+      holderCount: uniqueHolders.length,
+      holders: uniqueHolders,
+    };
+  } catch (error) {
+    console.error("Error fetching token holders:", error);
+    throw error;
   }
-
-  return {
-    holderCount: allOwners.size,
-    holders: Array.from(allOwners),
-  };
 }
 
 async function getTokenMetadata(apiKey, mintAddress) {
@@ -77,29 +93,15 @@ async function getTokenMetadata(apiKey, mintAddress) {
     }
 
     const data = await response.json();
-    console.log("Raw API response:", JSON.stringify(data, null, 2));
 
     if (data && data.length > 0) {
       const metadata = data[0];
 
       let image = metadata.offChainMetadata?.metadata?.image || "No Image";
-      const ipfsUri =
-        metadata.onChainMetadata?.metadata?.data?.uri ||
-        metadata.offChainMetadata?.uri;
 
-      // If the IPFS link exists and is JSON, fetch the content from that link
-      if (ipfsUri && ipfsUri.includes("ipfs.io")) {
-        try {
-          const ipfsResponse = await fetch(ipfsUri);
-          const ipfsData = await ipfsResponse.json();
-
-          // Check if the IPFS JSON has an image field
-          if (ipfsData.image) {
-            image = ipfsData.image;
-          }
-        } catch (ipfsError) {
-          console.error("Error fetching IPFS data:", ipfsError);
-        }
+      // Fetch image from IPFS if necessary
+      if (image && image.startsWith("ipfs://")) {
+        image = image.replace("ipfs://", "https://ipfs.io/ipfs/");
       }
 
       return {
@@ -130,15 +132,15 @@ async function getTokenMetadata(apiKey, mintAddress) {
 }
 
 async function getTokenInfo(apiKey, mintAddress) {
-  const [tokenHoldersResult, metadata] = await Promise.all([
+  const [holderInfo, metadata] = await Promise.all([
     getTokenHolders(apiKey, mintAddress),
     getTokenMetadata(apiKey, mintAddress),
   ]);
 
   return {
-    holders: tokenHoldersResult.holders,
-    holderCount: tokenHoldersResult.holderCount,
-    metadata: metadata,
+    holderCount: holderInfo.holderCount,
+    holders: holderInfo.holders,
+    metadata,
   };
 }
 

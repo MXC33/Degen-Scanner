@@ -1,6 +1,7 @@
-// TokenInfo.tsx
+import React, { useState, CSSProperties } from "react";
 
-import React, { useState } from "react";
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 interface TokenInfo {
   mintAddress: string;
@@ -13,7 +14,7 @@ interface TokenInfo {
   };
 }
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   container: {
     maxWidth: "1000px",
     margin: "0 auto",
@@ -25,7 +26,7 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
     padding: "40px",
-    textAlign: "center",
+    textAlign: "center" as CSSProperties["textAlign"],
     marginBottom: "30px",
   },
   heroTitle: {
@@ -78,11 +79,11 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
     padding: "15px",
-    textAlign: "center",
+    textAlign: "center" as CSSProperties["textAlign"],
     width: "250px",
     cursor: "pointer",
     transition: "transform 0.2s, box-shadow 0.2s",
-    position: "relative",
+    position: "relative" as CSSProperties["position"],
   },
   selectedCard: {
     border: "2px solid #e63946",
@@ -110,7 +111,7 @@ const styles = {
   description: {
     fontSize: "12px",
     marginTop: "10px",
-    textAlign: "left",
+    textAlign: "left" as CSSProperties["textAlign"],
     maxHeight: "60px",
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -127,7 +128,7 @@ const styles = {
     padding: "20px",
     borderRadius: "8px",
     marginBottom: "20px",
-    textAlign: "center",
+    textAlign: "center" as CSSProperties["textAlign"],
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -168,9 +169,8 @@ export default function TokenInfo() {
     setMintAddress(""); // Clear input after fetching
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/token-info/${address}`
-      );
+      const response = await fetch(`${API_BASE_URL}/api/token-info/${address}`);
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to fetch token information");
@@ -196,7 +196,7 @@ export default function TokenInfo() {
 
   const handleFetchToken = () => {
     if (mintAddress.trim() !== "") {
-      fetchTokenInfo(mintAddress);
+      fetchTokenInfo(mintAddress.trim());
     }
   };
 
@@ -248,8 +248,9 @@ export default function TokenInfo() {
 
   const fetchTokenComparison = async (address1: string, address2: string) => {
     const response = await fetch(
-      `http://localhost:3000/api/token-compare/${address1}/${address2}`
+      `${API_BASE_URL}/api/token-compare/${address1}/${address2}`
     );
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(

@@ -1,39 +1,42 @@
-// server.js
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const {
-  getTokenHolders,
-  getTokenMetadata,
-  getTokenInfo,
-} = require("./tokenHolders");
+const { getTokenInfo } = require("./tokenHolders");
 const dotenv = require("dotenv");
 
-dotenv.config({ path: path.resolve(__dirname, "..", ".env") });
+dotenv.config({ path: path.resolve(__dirname, ".env") });
+
+console.log("HELIUS_API_KEY:", process.env.HELIUS_API_KEY);
+console.log("Current working directory:", process.cwd());
+
+const apiKey = process.env.HELIUS_API_KEY;
+
+if (!apiKey) {
+  console.error("HELIUS_API_KEY is not defined in the .env file.");
+  process.exit(1);
+}
+
+console.log("HELIUS_API_KEY loaded successfully.");
 
 const app = express();
 
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: "http://localhost:3001", // Adjust if needed
+    origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 5000;
 
 app.get("/api/token-info/:mintAddress", async (req, res) => {
   try {
     const { mintAddress } = req.params;
     console.log(`Fetching info for address: ${mintAddress}`);
 
-    const tokenInfo = await getTokenInfo(
-      process.env.HELIUS_API_KEY,
-      mintAddress
-    );
+    const tokenInfo = await getTokenInfo(apiKey, mintAddress);
 
     res.json({
       mintAddress,
@@ -41,7 +44,7 @@ app.get("/api/token-info/:mintAddress", async (req, res) => {
       metadata: tokenInfo.metadata,
     });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error fetching token info:", error);
     res.status(500).json({
       error: "An error occurred while fetching token information",
       details: error.message,
@@ -55,8 +58,8 @@ app.get("/api/token-compare/:mintAddress1/:mintAddress2", async (req, res) => {
     console.log(`Comparing tokens: ${mintAddress1} and ${mintAddress2}`);
 
     const [tokenInfo1, tokenInfo2] = await Promise.all([
-      getTokenInfo(process.env.HELIUS_API_KEY, mintAddress1),
-      getTokenInfo(process.env.HELIUS_API_KEY, mintAddress2),
+      getTokenInfo(apiKey, mintAddress1),
+      getTokenInfo(apiKey, mintAddress2),
     ]);
 
     const holders1 = new Set(tokenInfo1.holders);
@@ -80,7 +83,7 @@ app.get("/api/token-compare/:mintAddress1/:mintAddress2", async (req, res) => {
       commonHoldersCount: commonHolders.length,
     });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error comparing tokens:", error);
     res.status(500).json({
       error: "An error occurred while comparing tokens",
       details: error.message,
