@@ -1,5 +1,3 @@
-// tokenHolders.js
-
 const fetch = require("node-fetch");
 const { LRUCache } = require("lru-cache"); // Updated import for v11.x
 
@@ -122,9 +120,9 @@ async function getTokenMetadata(apiKey, mintAddress, retries = 3) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(
-        `HTTP error! status: ${response.status}, message: ${errorText}`
-      );
+      throw new Error(`
+        HTTP error! status: ${response.status}, message: ${errorText}
+      `);
     }
 
     const data = await response.json();
@@ -156,6 +154,7 @@ async function getTokenMetadata(apiKey, mintAddress, retries = 3) {
       // **Start of Caching Logic**
       cache.set(cacheKey, result); // Set data in cache
       console.log(`[Cache Set] Metadata for ${mintAddress}`);
+
       // **End of Caching Logic**
 
       return result;

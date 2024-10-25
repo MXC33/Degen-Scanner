@@ -2,10 +2,10 @@
   "name": "fetchingholders",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "server/src/index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js",
+    "start": "node server/src/index.js",
+    "server": "nodemon server/src/index.js",
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm run build"
@@ -19,7 +19,8 @@
     "express": "^4.21.1",
     "lru-cache": "^11.0.1",
     "node-fetch": "^2.7.0",
-    "web-vitals": "^4.2.4"
+    "web-vitals": "^4.2.4",
+    "winston": "^3.15.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
