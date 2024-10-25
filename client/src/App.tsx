@@ -1,4 +1,4 @@
-// App.tsx
+// client/src/App.tsx
 
 import React from "react";
 import TokenInfo from "./components/TokenInfo";

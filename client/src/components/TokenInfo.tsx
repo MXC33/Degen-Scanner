@@ -1,4 +1,10 @@
-import React, { useState, CSSProperties } from "react";
+// client/src/components/TokenInfo.tsx
+
+import React, { useState } from "react";
+import TokenCard from "./TokenCard";
+import CombinedInfo from "./CombinedInfo";
+import TokenAccounts from "./TokenAccounts";
+import useFetchToken from "../hooks/useFetchToken";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
@@ -14,7 +20,7 @@ interface TokenInfo {
   };
 }
 
-const styles: { [key: string]: CSSProperties } = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     maxWidth: "1000px",
     margin: "0 auto",
@@ -26,7 +32,7 @@ const styles: { [key: string]: CSSProperties } = {
     borderRadius: "8px",
     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
     padding: "40px",
-    textAlign: "center" as CSSProperties["textAlign"],
+    textAlign: "center" as React.CSSProperties["textAlign"],
     marginBottom: "30px",
   },
   heroTitle: {
@@ -73,75 +79,6 @@ const styles: { [key: string]: CSSProperties } = {
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "20px",
   },
-  card: {
-    backgroundColor: "#333",
-    color: "white",
-    borderRadius: "8px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-    padding: "15px",
-    textAlign: "center" as CSSProperties["textAlign"],
-    width: "250px",
-    cursor: "pointer",
-    transition: "transform 0.2s, box-shadow 0.2s",
-    position: "relative" as CSSProperties["position"],
-  },
-  selectedCard: {
-    border: "2px solid #e63946",
-  },
-  cardHeader: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  removeButton: {
-    background: "transparent",
-    border: "none",
-    color: "#fff",
-    fontSize: "20px",
-    cursor: "pointer",
-    padding: "0",
-    margin: "0",
-    lineHeight: "1",
-  },
-  tokenInfoImage: {
-    width: "100%",
-    height: "auto",
-    borderRadius: "4px",
-    marginBottom: "5px",
-  },
-  description: {
-    fontSize: "12px",
-    marginTop: "10px",
-    textAlign: "left" as CSSProperties["textAlign"],
-    maxHeight: "60px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
-  },
-  readMore: {
-    cursor: "pointer",
-    color: "#3490dc",
-    fontSize: "12px",
-  },
-  combinedBox: {
-    backgroundColor: "#444",
-    color: "white",
-    padding: "20px",
-    borderRadius: "8px",
-    marginBottom: "20px",
-    textAlign: "center" as CSSProperties["textAlign"],
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  combinedImages: {
-    display: "flex",
-    gap: "10px",
-  },
-  combinedImage: {
-    width: "50px",
-    height: "50px",
-    borderRadius: "50%",
-  },
   error: {
     backgroundColor: "#fed7d7",
     borderColor: "#f56565",
@@ -153,186 +90,35 @@ const styles: { [key: string]: CSSProperties } = {
 };
 
 export default function TokenInfo() {
+  const {
+    tokens,
+    loading,
+    error,
+    fetchTokenInfo,
+    selectedTokens,
+    selectToken,
+    removeToken,
+    commonHoldersCount,
+    loadingComparison,
+  } = useFetchToken(API_BASE_URL);
+
   const [mintAddress, setMintAddress] = useState("");
-  const [tokens, setTokens] = useState<TokenInfo[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedTokens, setSelectedTokens] = useState<TokenInfo[]>([]);
-  const [commonHoldersCount, setCommonHoldersCount] = useState<number | null>(
-    null
-  );
-  const [loadingComparison, setLoadingComparison] = useState(false);
-
-  const fetchTokenInfo = async (address: string) => {
-    setLoading(true);
-    setError(null);
-    setMintAddress(""); // Clear input after fetching
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/token-info/${address}`);
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch token information");
-      }
-      const data = await response.json();
-      const tokenData: TokenInfo = {
-        mintAddress: data.mintAddress || address,
-        holderCount: data.holderCount || 0,
-        metadata: {
-          name: data.metadata.name || "Unknown",
-          symbol: data.metadata.symbol || "Unknown",
-          description: data.metadata.description || "No Description",
-          image: data.metadata.image || "",
-        },
-      };
-      setTokens((prevTokens) => [...prevTokens, tokenData]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [showTokenAccounts, setShowTokenAccounts] = useState<{
+    [key: string]: boolean;
+  }>({}); // Track which tokens have their accounts shown
 
   const handleFetchToken = () => {
     if (mintAddress.trim() !== "") {
       fetchTokenInfo(mintAddress.trim());
+      setMintAddress(""); // Clear input after fetching
     }
   };
 
-  const handleTokenSelect = async (info: TokenInfo) => {
-    if (selectedTokens.includes(info)) {
-      // Deselect token
-      setSelectedTokens((prevSelected) =>
-        prevSelected.filter((t) => t !== info)
-      );
-      setCommonHoldersCount(null);
-    } else if (selectedTokens.length < 2) {
-      // Select token if less than 2 are selected
-      const newSelectedTokens = [...selectedTokens, info];
-      setSelectedTokens(newSelectedTokens);
-
-      if (newSelectedTokens.length === 2) {
-        // Fetch common holders count
-        setLoadingComparison(true);
-        try {
-          const data = await fetchTokenComparison(
-            newSelectedTokens[0].mintAddress,
-            newSelectedTokens[1].mintAddress
-          );
-          setCommonHoldersCount(data.commonHoldersCount);
-        } catch (err) {
-          setError(err instanceof Error ? err.message : String(err));
-        } finally {
-          setLoadingComparison(false);
-        }
-      }
-    }
-  };
-
-  const handleRemoveToken = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    info: TokenInfo
-  ) => {
-    e.stopPropagation(); // Prevent the card's onClick event from firing
-    // Remove the token from the tokens list
-    setTokens((prevTokens) => prevTokens.filter((token) => token !== info));
-    // Deselect the token if it's selected
-    if (selectedTokens.includes(info)) {
-      setSelectedTokens((prevSelected) =>
-        prevSelected.filter((t) => t !== info)
-      );
-      setCommonHoldersCount(null);
-    }
-  };
-
-  const fetchTokenComparison = async (address1: string, address2: string) => {
-    const response = await fetch(
-      `${API_BASE_URL}/api/token-compare/${address1}/${address2}`
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.error || "Failed to fetch token comparison information"
-      );
-    }
-    const data = await response.json();
-    return data;
-  };
-
-  const renderTokenInfo = (info: TokenInfo) => {
-    const isSelected = selectedTokens.includes(info);
-
-    return (
-      <div
-        style={{ ...styles.card, ...(isSelected ? styles.selectedCard : {}) }}
-        key={info.mintAddress}
-        onClick={() => handleTokenSelect(info)}
-      >
-        <div style={styles.cardHeader}>
-          <button
-            style={styles.removeButton}
-            onClick={(e) => handleRemoveToken(e, info)}
-          >
-            &times;
-          </button>
-        </div>
-        {info.metadata.image && (
-          <img
-            src={info.metadata.image}
-            alt={info.metadata.name}
-            style={styles.tokenInfoImage}
-          />
-        )}
-        <p>
-          <strong>{info.metadata.symbol}</strong>
-        </p>
-        <p>{info.metadata.name}</p>
-        <p>Holders: {info.holderCount}</p>
-      </div>
-    );
-  };
-
-  const renderCombinedInfo = () => {
-    if (selectedTokens.length === 1) {
-      return (
-        <div style={styles.combinedBox}>
-          <p>Select another token to see common holders.</p>
-        </div>
-      );
-    }
-
-    if (selectedTokens.length === 2) {
-      const [token1, token2] = selectedTokens;
-
-      return (
-        <div style={styles.combinedBox}>
-          <div style={styles.combinedImages}>
-            <img
-              src={token1.metadata.image}
-              alt={token1.metadata.name}
-              style={styles.combinedImage}
-            />
-            <img
-              src={token2.metadata.image}
-              alt={token2.metadata.name}
-              style={styles.combinedImage}
-            />
-          </div>
-          {loadingComparison ? (
-            <p>Loading common holders...</p>
-          ) : (
-            <p>
-              <strong>{token1.metadata.symbol}</strong> and{" "}
-              <strong>{token2.metadata.symbol}</strong> have{" "}
-              <strong>{commonHoldersCount}</strong> common holders.
-            </p>
-          )}
-        </div>
-      );
-    }
-    return null;
+  const toggleTokenAccounts = (address: string) => {
+    setShowTokenAccounts((prevState) => ({
+      ...prevState,
+      [address]: !prevState[address],
+    }));
   };
 
   return (
@@ -369,9 +155,43 @@ export default function TokenInfo() {
         )}
       </div>
 
-      {renderCombinedInfo()}
+      <CombinedInfo
+        selectedTokens={selectedTokens}
+        commonHoldersCount={commonHoldersCount}
+        loading={loadingComparison}
+      />
 
-      <div style={styles.grid}>{tokens.map(renderTokenInfo)}</div>
+      <div style={styles.grid}>
+        {tokens.map((token) => (
+          <div key={token.mintAddress}>
+            <TokenCard
+              info={token}
+              isSelected={selectedTokens.includes(token)}
+              onSelect={selectToken}
+              onRemove={removeToken}
+            />
+            <button
+              onClick={() => toggleTokenAccounts(token.mintAddress)}
+              style={{
+                marginTop: "10px",
+                padding: "8px 16px",
+                backgroundColor: "#3490dc",
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              {showTokenAccounts[token.mintAddress]
+                ? "Hide Owners"
+                : "Show Owners"}
+            </button>
+            {showTokenAccounts[token.mintAddress] && (
+              <TokenAccounts mintAddress={token.mintAddress} />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
