@@ -6,17 +6,14 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-console.log("HELIUS_API_KEY:", process.env.HELIUS_API_KEY);
-console.log("Current working directory:", process.cwd());
-
 const apiKey = process.env.HELIUS_API_KEY;
 
 if (!apiKey) {
-  console.error("HELIUS_API_KEY is not defined in the .env file.");
+  console.error("Api key is not defined in the .env file.");
   process.exit(1);
 }
 
-console.log("HELIUS_API_KEY loaded successfully.");
+console.log("Api was loaded successfully.");
 
 const app = express();
 
