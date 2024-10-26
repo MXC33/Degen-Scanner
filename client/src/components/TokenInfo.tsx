@@ -123,6 +123,9 @@ export default function TokenInfo() {
   };
 
   return (
+  <div style={{ paddingTop: "60px" }}>
+    <TrendingTokens />
+  
     <div style={styles.container}>
       <div style={styles.hero}>
         <h1 style={styles.heroTitle}>Token Information</h1>
@@ -155,12 +158,7 @@ export default function TokenInfo() {
           </div>
         )}
       </div>
-
-      <div style={styles.container}>
-      <TrendingTokens /> {/* Add Trending Tokens component here */}
-
-      {/* Rest of your TokenInfo component code */}
-     </div>
+    </div>
 
       <CombinedInfo
         selectedTokens={selectedTokens}

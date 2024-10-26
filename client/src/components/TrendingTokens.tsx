@@ -1,8 +1,8 @@
-// client/src/components/TrendingTokens.tsx
+/** @jsxImportSource @emotion/react */
+import { css, keyframes } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { CSSProperties } from "react";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000"; // Ensure this line is present
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 interface TokenInfo {
   mintAddress: string;
@@ -12,29 +12,50 @@ interface TokenInfo {
     symbol: string;
     image: string;
   };
+  change: number;
 }
 
-const styles: { [key: string]: CSSProperties } = {
-  container: {
-    backgroundColor: "#1e1e1e",
+// Define the keyframes separately
+const scrollAnimation = keyframes`
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+`;
+
+// Use Emotion's `css` to apply keyframes animation
+const bannerContentStyle = css`
+  display: inline-flex;
+  align-items: center;
+  animation: ${scrollAnimation} 15s linear infinite;
+`;
+
+const styles: { [key: string]: React.CSSProperties } = {
+  bannerContainer: {
+    backgroundColor: "#222",
     color: "white",
-    padding: "20px",
-    borderRadius: "8px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-    marginBottom: "20px",
-    maxWidth: "300px",
+    padding: "10px 0",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    position: "fixed",
+    top: 0,
+    width: "100%",
+    zIndex: 1000,
   },
-  listItem: {
+  bannerItem: {
     display: "flex",
     alignItems: "center",
+    margin: "0 30px",
     gap: "10px",
-    padding: "10px 0",
-    borderBottom: "1px solid #333",
   },
   image: {
-    width: "40px",
-    height: "40px",
+    width: "30px",
+    height: "30px",
     borderRadius: "50%",
+  },
+  positiveChange: {
+    color: "green",
+  },
+  negativeChange: {
+    color: "red",
   },
 };
 
@@ -43,6 +64,8 @@ const TrendingTokens: React.FC = () => {
   const contractAddresses = [
     "6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M",
     "9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t",
+    "HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1",
+    "GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC"
 
   ];
 
@@ -63,6 +86,7 @@ const TrendingTokens: React.FC = () => {
                 symbol: data.metadata.symbol,
                 image: data.metadata.image,
               },
+              change: (Math.random() - 0.5) * 10,
             };
           })
         );
@@ -76,19 +100,20 @@ const TrendingTokens: React.FC = () => {
   }, []);
 
   return (
-    <div style={styles.container}>
-      <h3>Trending Tokens</h3>
-      {trendingTokens.map((token) => (
-        <div style={styles.listItem} key={token.mintAddress}>
-          <img src={token.metadata.image} alt={token.metadata.symbol} style={styles.image} />
-          <div>
-            <p>
-              <strong>{token.metadata.symbol}</strong>
-            </p>
-            <p>Holders: {token.holderCount}</p>
+    <div style={styles.bannerContainer}>
+      <div css={bannerContentStyle}>
+        {trendingTokens.map((token) => (
+          <div style={styles.bannerItem} key={token.mintAddress}>
+            <img src={token.metadata.image} alt={token.metadata.symbol} style={styles.image} />
+            <div>
+              <strong>{token.metadata.symbol}</strong> | Holders: {token.holderCount} |{" "}
+              <span style={token.change >= 0 ? styles.positiveChange : styles.negativeChange}>
+                {token.change.toFixed(2)}%
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
