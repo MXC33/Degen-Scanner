@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import TokenCard from "./TokenCard";
 import CombinedInfo from "./CombinedInfo";
 import TokenAccounts from "./TokenAccounts";
+import TrendingTokens from "./TrendingTokens";
 import useFetchToken from "../hooks/useFetchToken";
 
 const API_BASE_URL =
@@ -154,6 +155,12 @@ export default function TokenInfo() {
           </div>
         )}
       </div>
+
+      <div style={styles.container}>
+      <TrendingTokens /> {/* Add Trending Tokens component here */}
+
+      {/* Rest of your TokenInfo component code */}
+     </div>
 
       <CombinedInfo
         selectedTokens={selectedTokens}

@@ -78,3 +78,153 @@
 2024-10-25 18:20:29 [INFO]: Fetching info for address: 8Ki8DpuWNxu9VsS3kQbarsCWMcFGWkzzA8pUPto9zBd5
 2024-10-25 18:21:55 [INFO]: Server is running on port 5000
 2024-10-25 18:22:06 [INFO]: Server is running on port 5000
+2024-10-26 09:44:34 [INFO]: Server is running on port 5000
+2024-10-26 09:44:41 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:03:27 [INFO]: Server is running on port 5000
+2024-10-26 10:03:36 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:05:47 [INFO]: Fetching info for address: DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
+2024-10-26 10:05:47 [INFO]: Fetching info for address: Es9vMFrzaCERDdcXW2yT5YoEJR5ATyZtWj5MS5ptd4Q
+2024-10-26 10:05:47 [INFO]: Fetching info for address: 7dHbWX9PrX5mAgukmD5A7Nf8k7zXwGzXtGeAXc2jVz5w
+2024-10-26 10:05:47 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:05:47 [INFO]: Fetching info for address: 3KMhQdmJw9FwcyzZ5d5SrtVc8bApkH59D58BpdCwHn45
+2024-10-26 10:05:47 [INFO]: Fetching info for address: 6f3hym48Nt9FGwL81vSNMx2n4jzdbjQrJCPRkyFajp4A
+2024-10-26 10:05:49 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 5ShZ1WCXjGgZ9QLzJhJGVun1gtHkjL3E7oxG4ZShFsTf
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 5VjHzFRfZxJfWKoWBtuU5TkyaoAipTcCZ6wFdHQnvZJ7
+2024-10-26 10:05:49 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 3KMhQdmJw9FwcyzZ5d5SrtVc8bApkH59D58BpdCwHn45
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 7dHbWX9PrX5mAgukmD5A7Nf8k7zXwGzXtGeAXc2jVz5w
+2024-10-26 10:05:49 [INFO]: Fetching info for address: Es9vMFrzaCERDdcXW2yT5YoEJR5ATyZtWj5MS5ptd4Q
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 6f3hym48Nt9FGwL81vSNMx2n4jzdbjQrJCPRkyFajp4A
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 3KMhQdmJw9FwcyzZ5d5SrtVc8bApkH59D58BpdCwHn45
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 7dHbWX9PrX5mAgukmD5A7Nf8k7zXwGzXtGeAXc2jVz5w
+2024-10-26 10:05:49 [INFO]: Fetching info for address: Es9vMFrzaCERDdcXW2yT5YoEJR5ATyZtWj5MS5ptd4Q
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 6f3hym48Nt9FGwL81vSNMx2n4jzdbjQrJCPRkyFajp4A
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 3KMhQdmJw9FwcyzZ5d5SrtVc8bApkH59D58BpdCwHn45
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 7dHbWX9PrX5mAgukmD5A7Nf8k7zXwGzXtGeAXc2jVz5w
+2024-10-26 10:05:49 [INFO]: Fetching info for address: Es9vMFrzaCERDdcXW2yT5YoEJR5ATyZtWj5MS5ptd4Q
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 6f3hym48Nt9FGwL81vSNMx2n4jzdbjQrJCPRkyFajp4A
+2024-10-26 10:05:49 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 5VjHzFRfZxJfWKoWBtuU5TkyaoAipTcCZ6wFdHQnvZJ7
+2024-10-26 10:05:49 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:49 [INFO]: Fetching info for address: 5ShZ1WCXjGgZ9QLzJhJGVun1gtHkjL3E7oxG4ZShFsTf
+2024-10-26 10:05:49 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:49 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:05:50 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:50 [INFO]: Fetching info for address: 5ShZ1WCXjGgZ9QLzJhJGVun1gtHkjL3E7oxG4ZShFsTf
+2024-10-26 10:05:50 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:50 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:05:50 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:50 [INFO]: Fetching info for address: 5ShZ1WCXjGgZ9QLzJhJGVun1gtHkjL3E7oxG4ZShFsTf
+2024-10-26 10:05:50 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:05:51 [INFO]: Fetching info for address: 5VjHzFRfZxJfWKoWBtuU5TkyaoAipTcCZ6wFdHQnvZJ7
+2024-10-26 10:05:51 [INFO]: Fetching info for address: 5VjHzFRfZxJfWKoWBtuU5TkyaoAipTcCZ6wFdHQnvZJ7
+2024-10-26 10:05:54 [ERROR]: Error fetching token info: RPC Error: Rate limit exceeded
+2024-10-26 10:05:54 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:06:07 [INFO]: Fetching info for address: DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
+2024-10-26 10:06:07 [INFO]: Fetching info for address: 9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E
+2024-10-26 10:06:07 [INFO]: Fetching info for address: DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
+2024-10-26 10:06:12 [ERROR]: Error fetching token info: RPC Error: Rate limit exceeded
+2024-10-26 10:06:12 [INFO]: Fetching info for address: DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
+2024-10-26 10:06:13 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:06:17 [ERROR]: Error fetching token info: RPC Error: Rate limit exceeded
+2024-10-26 10:06:17 [INFO]: Fetching info for address: 9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E
+2024-10-26 10:06:17 [INFO]: Fetching info for address: So11111111111111111111111111111111111111112
+2024-10-26 10:06:18 [INFO]: Fetching info for address: 9n4nbM75f5Ui33ZbPYXn59EwSgE8CGsHtAeTH5YFeJ9E
+2024-10-26 10:06:18 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:18 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:18 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:18 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:18 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:18 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:18 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:19 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:21 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:21 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:21 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:21 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:22 [ERROR]: Error fetching token info: RPC Error: Rate limit exceeded
+2024-10-26 10:06:22 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:27 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:31 [INFO]: Server is running on port 5000
+2024-10-26 10:06:34 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:34 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:34 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:34 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:34 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:34 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:34 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-26 10:06:34 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:35 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-26 10:06:51 [INFO]: Server is running on port 5000
+2024-10-26 10:06:55 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:55 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:56 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:56 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:56 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:06:57 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:57 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:06:57 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:07:08 [INFO]: Fetching info for address: A94X2fRy3wydNShU4dRaDyap2UuoeWJGWyATtyp61WZf
+2024-10-26 10:07:15 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:07:15 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:15 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:07:16 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:33 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:33 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:33 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:07:33 [INFO]: Fetching info for address: 2kj1MLqBPnhCTyjxT3MtJhcktJHxgR7s4EDu18khsvgj
+2024-10-26 10:07:46 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-26 10:07:46 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:47 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:47 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-26 10:07:50 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:50 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-26 10:07:50 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-26 10:07:50 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
