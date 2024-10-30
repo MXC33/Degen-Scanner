@@ -7,6 +7,7 @@ import TokenAccounts from "./TokenAccounts";
 import TrendingTokens from "./TrendingTokens";
 import useFetchToken from "../hooks/useFetchToken";
 import "./styles/TokenInfo.css";
+import WalletConnectButton from "./WalletConnectButton";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
@@ -57,6 +58,7 @@ export default function TokenInfo() {
   return (
     <div style={{ paddingTop: "60px" }}>
       <TrendingTokens />
+      <WalletConnectButton />
 
       <div className="token-info-container">
         <div className="token-info-hero">

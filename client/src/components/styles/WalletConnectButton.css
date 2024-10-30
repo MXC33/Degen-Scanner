@@ -1,0 +1,64 @@
+/* client/src/components/styles/WalletConnectButton.css */
+
+.wallet-connect-container {
+  position: relative;
+  display: inline-block;
+}
+
+.wallet-button {
+  background-color: #4e44ce;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.wallet-button:hover {
+  background-color: #3b339d;
+}
+
+.wallet-button.connected {
+  background-color: #28a745;
+}
+
+.wallet-button.connected:hover {
+  background-color: #218838;
+}
+
+.wallet-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  margin-top: 8px;
+  min-width: 160px;
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.wallet-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wallet-menu li {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #333333;
+}
+
+.wallet-menu li:hover {
+  background-color: #f5f5f5;
+}
+
+.connection-status {
+  margin-top: 8px;
+  color: #333333;
+  font-size: 14px;
+}
