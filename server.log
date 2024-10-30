@@ -385,3 +385,43 @@
 2024-10-26 11:56:44 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
 2024-10-26 11:56:44 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
 2024-10-26 11:56:45 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:05:39 [INFO]: Server is running on port 5000
+2024-10-30 19:06:56 [INFO]: Server is running on port 5000
+2024-10-30 19:07:04 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:07:04 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:07:04 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:07:04 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:07:06 [ERROR]: Error fetching token info: 
+        HTTP error! status: 429, message: {"jsonrpc":"2.0","error":{"code":-32429,"message":"Rate limit exceeded"}}
+      
+2024-10-30 19:07:06 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:07:06 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:07:06 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:07:07 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:13:36 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:13:36 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:13:36 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:13:36 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:13:36 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:13:36 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:13:36 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:13:36 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:14:31 [INFO]: Fetching info for address: dasd
+2024-10-30 19:14:33 [ERROR]: Error fetching token info: RPC Error: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA excluded from account secondary indexes; this RPC method unavailable for key
+2024-10-30 19:16:00 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:16:00 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:16:00 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:16:00 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:16:00 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:16:00 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:16:00 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:16:00 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:17:54 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:17:54 [INFO]: Fetching info for address: 6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M
+2024-10-30 19:17:54 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:17:54 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:17:54 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:17:54 [INFO]: Fetching info for address: HXkbUADfocGyz2WrzJpjEfry8qyNDm5Kwiiq3Mz3tTi1
+2024-10-30 19:17:54 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t
+2024-10-30 19:17:54 [INFO]: Fetching info for address: GdHhyqHEJrPzpbfzURrJi8v1uJQRpthfzURqHJtHXyPC
+2024-10-30 19:18:08 [INFO]: Fetching info for address: 9TVjnzpF3X8DHsfVqYWoCGphJxtGYh1PDCFN5QmsHW5t

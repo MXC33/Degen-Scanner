@@ -1,0 +1,50 @@
+/* client/src/components/TrendingTokens.css */
+
+.banner-container {
+  background-color: #222;
+  color: white;
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.banner-content {
+  display: inline-flex;
+  align-items: center;
+  animation: scrollAnimation 15s linear infinite;
+}
+
+.banner-item {
+  display: flex;
+  align-items: center;
+  margin: 0 30px;
+  gap: 10px;
+}
+
+.banner-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.positive-change {
+  color: green;
+}
+
+.negative-change {
+  color: red;
+}
+
+/* Keyframes for scrolling animation */
+@keyframes scrollAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

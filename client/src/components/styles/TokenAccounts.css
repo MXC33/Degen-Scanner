@@ -1,0 +1,49 @@
+/* client/src/components/TokenAccounts.css */
+
+.token-accounts-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.token-accounts-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.token-accounts-list {
+  list-style-type: none;
+  max-height: 300px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.token-accounts-list-item {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+  word-break: break-all;
+}
+
+.token-accounts-loading {
+  color: #666;
+}
+
+.token-accounts-error {
+  color: #e63946;
+  margin-top: 10px;
+}
+
+.fetch-button {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #e63946;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}

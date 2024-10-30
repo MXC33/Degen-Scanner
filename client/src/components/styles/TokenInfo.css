@@ -1,0 +1,84 @@
+/* client/src/components/TokenInfo.css */
+
+.token-info-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.token-info-hero {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.hero-input {
+  width: 80%;
+  padding: 15px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.fetch-button {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #e63946;
+}
+
+.fetch-button.disabled {
+  background-color: #b6323b;
+  cursor: not-allowed;
+}
+
+.token-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.token-info-error {
+  background-color: #fed7d7;
+  border: 1px solid #f56565;
+  color: #c53030;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.show-owners-button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #3490dc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

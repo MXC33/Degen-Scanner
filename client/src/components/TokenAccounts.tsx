@@ -1,7 +1,7 @@
 // client/src/components/TokenAccounts.tsx
 
 import React, { useState } from "react";
-import { CSSProperties } from "react";
+import "./styles/TokenAccounts.css";
 
 interface TokenAccountsProps {
   mintAddress: string;
@@ -12,42 +12,6 @@ interface TokenAccountsData {
   owners: string[];
   totalOwners: number;
 }
-
-const styles: { [key: string]: CSSProperties } = {
-  container: {
-    backgroundColor: "#f9f9f9",
-    padding: "20px",
-    borderRadius: "8px",
-    marginTop: "20px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-  },
-  title: {
-    fontSize: "24px",
-    marginBottom: "10px",
-    color: "#333",
-  },
-  list: {
-    listStyleType: "none",
-    maxHeight: "300px",
-    overflowY: "scroll" as CSSProperties["overflowY"],
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    padding: "10px",
-    backgroundColor: "#fff",
-  },
-  listItem: {
-    padding: "5px 0",
-    borderBottom: "1px solid #eee",
-    wordBreak: "break-all" as CSSProperties["wordBreak"],
-  },
-  loading: {
-    color: "#666",
-  },
-  error: {
-    color: "#e63946",
-    marginTop: "10px",
-  },
-};
 
 const TokenAccounts: React.FC<TokenAccountsProps> = ({ mintAddress }) => {
   const [data, setData] = useState<TokenAccountsData | null>(null);
@@ -79,29 +43,24 @@ const TokenAccounts: React.FC<TokenAccountsProps> = ({ mintAddress }) => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>All Owners for Token: {mintAddress}</h2>
+    <div className="token-accounts-container">
+      <h2 className="token-accounts-title">
+        All Owners for Token: {mintAddress}
+      </h2>
       <button
         onClick={fetchTokenAccounts}
         disabled={loading}
-        style={{
-          padding: "10px 20px",
-          cursor: "pointer",
-          backgroundColor: "#e63946",
-          color: "#fff",
-          border: "none",
-          borderRadius: "4px",
-        }}
+        className="fetch-button"
       >
         {loading ? "Fetching..." : "Fetch All Owners"}
       </button>
-      {error && <div style={styles.error}>Error: {error}</div>}
+      {error && <div className="token-accounts-error">Error: {error}</div>}
       {data && (
         <div>
           <p>Total Owners: {data.totalOwners}</p>
-          <ul style={styles.list}>
+          <ul className="token-accounts-list">
             {data.owners.map((owner, index) => (
-              <li key={index} style={styles.listItem}>
+              <li key={index} className="token-accounts-list-item">
                 {owner}
               </li>
             ))}
