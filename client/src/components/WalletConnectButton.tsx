@@ -112,7 +112,6 @@ const WalletConnectButton: React.FC = () => {
             <div className="wallet-menu">
               <ul>
                 <li onClick={disconnectWallet}>Disconnect</li>
-                <li onClick={connectWallet}>Change Wallet</li>
               </ul>
             </div>
           )}
