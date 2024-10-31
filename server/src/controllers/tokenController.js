@@ -1,7 +1,6 @@
 // server/src/controllers/tokenController.js
 
 const { getTokenInfo } = require("../services/tokenHolders");
-const { getTokenAccounts } = require("../services/tokenAccount");
 const logger = require("../services/logger");
 
 // Controller to fetch token information
@@ -72,33 +71,9 @@ const compareTokens = async (req, res) => {
   }
 };
 
-// Controller to fetch all token accounts (owners) for a given mint address
-const fetchTokenAccountsController = async (req, res) => {
-  try {
-    const { mintAddress } = req.params;
-    logger.info(`Fetching all token accounts for address: ${mintAddress}`);
-
-    const owners = await getTokenAccounts(
-      process.env.HELIUS_API_KEY,
-      mintAddress
-    );
-
-    res.json({
-      mintAddress,
-      owners,
-      totalOwners: owners.length,
-    });
-  } catch (error) {
-    logger.error(`Error fetching token accounts: ${error.message}`);
-    res.status(500).json({
-      error: "An error occurred while fetching token accounts",
-      details: error.message,
-    });
-  }
-};
 
 module.exports = {
   fetchTokenInfo,
   compareTokens,
-  fetchTokenAccountsController,
+
 };

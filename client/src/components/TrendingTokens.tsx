@@ -18,6 +18,7 @@ interface TokenInfo {
 }
 
 const TrendingTokens: React.FC = () => {
+  
   const [trendingTokens, setTrendingTokens] = useState<TokenInfo[]>([]);
   const contractAddresses = [
     "6Pz3LdoipwFor2w9tGKfnLZZkJvucwbEef8yV9kvtE2M",
