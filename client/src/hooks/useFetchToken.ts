@@ -1,13 +1,9 @@
 // client/src/hooks/useFetchToken.ts
 
 import { useState } from "react";
-<<<<<<< Updated upstream
-import { TokenInfo } from "../types/types"; // Import types from centralized file
-=======
 import { TokenInfoType } from "../types/types";
 
 
->>>>>>> Stashed changes
 
 interface FetchResult {
   tokens: TokenInfoType[];
@@ -45,15 +41,20 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
 
       const data = await response.json();
 
-<<<<<<< Updated upstream
+
       // Ensure that holders and topHolders are present
       if (!data.holders || !data.topHolders) {
         throw new Error("Incomplete data received from the server.");
       }
 
-      const tokenData: TokenInfo = {
+      console.log("Fetched token data:", data);
+
+      const tokenData: TokenInfoType = {
         mintAddress: data.mintAddress || address,
         holderCount: data.holderCount || 0,
+        marketCap: data.metadata.marketCap,
+        pricePerToken: data.metadata.pricePerToken,
+        supply: data.metadata.supply, // add supply
         metadata: {
           name: data.metadata.name || "Unknown",
           symbol: data.metadata.symbol || "Unknown",
@@ -62,26 +63,10 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
         },
         topHolders: data.topHolders, // Populate with actual data
         holders: data.holders, // Populate with actual data
+        links: data.metadata.links,
       };
-=======
-      console.log("Fetched token data:", data);
 
 
-     const tokenData: TokenInfoType = {
-      mintAddress: data.mintAddress,
-      holderCount: data.holderCount,
-      marketCap: data.metadata.marketCap,
-      pricePerToken: data.metadata.pricePerToken,
-      supply: data.metadata.supply, // add supply
-      metadata: {
-        name: data.metadata.name,
-        symbol: data.metadata.symbol,
-        description: data.metadata.description,
-        image: data.metadata.image,
-      },
-      links: data.metadata.links, // Assuming links are provided by the API
-};
->>>>>>> Stashed changes
 
       setTokens((prevTokens) => [...prevTokens, tokenData]);
     } catch (err) {

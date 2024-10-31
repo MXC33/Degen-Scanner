@@ -1,18 +1,12 @@
-<<<<<<< Updated upstream
 // client/src/components/TokenCard.tsx
 
 import React, { useState } from "react";
 import TopHolders from "./TopHolders"; // Import the new component
 import "./styles/TokenCard.css";
-import { TokenInfo } from "../types/types"; // Import shared types
-=======
-import React from "react";
-import "./styles/TokenCard.css";
 import { TokenInfoType } from "../types/types";
 import { formatSmallNumber, formatLargeNumber } from "../utilities/formatNumber"; // Import utilities
 
 
->>>>>>> Stashed changes
 
 interface TokenCardProps {
   info: TokenInfoType;
@@ -56,27 +50,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
           className="token-info-image"
         />
       )}
-<<<<<<< Updated upstream
-      <p>
-        <strong>{info.metadata.symbol}</strong>
-      </p>
-      <p>{info.metadata.name}</p>
-      <p>Holders: {info.holderCount}</p>
 
-      {/* New Button to Toggle Top Holders */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          toggleTopHolders();
-        }}
-        className="show-top-holders-button"
-      >
-        {showTopHolders ? "Hide Top Holders" : "Show Top Holders"}
-      </button>
-
-      {/* Conditionally Render TopHolders */}
-      {showTopHolders && <TopHolders topHolders={info.topHolders} />}
-=======
       <p className="token-symbol">{info.metadata.symbol}</p>
       <div className="token-details">
         <p>{info.metadata.name}</p>
@@ -101,7 +75,21 @@ const TokenCard: React.FC<TokenCardProps> = ({
           </a>
         )}
       </div>
->>>>>>> Stashed changes
+
+      {/* New Button to Toggle Top Holders */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleTopHolders();
+        }}
+        className="show-top-holders-button"
+      >
+        {showTopHolders ? "Hide Top Holders" : "Show Top Holders"}
+      </button>
+
+      {/* Conditionally Render TopHolders */}
+      {showTopHolders && <TopHolders topHolders={info.topHolders} />}
+
     </div>
   );
 };

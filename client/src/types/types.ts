@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 // client/src/types/TokenInfo.ts
 
 export interface TopHolder {
@@ -15,19 +14,12 @@ export interface TokenMetadata {
   image: string;
 }
 
-export interface TokenInfo {
-  mintAddress: string;
-  holderCount: number;
-  holders: string[];
-  topHolders: TopHolder[];
-  metadata: TokenMetadata;
-}
-=======
-// client/src/types/types.ts
 
 export interface TokenInfoType {
     mintAddress: string;
     holderCount: number;
+    holders: string[];
+    topHolders: TopHolder[];
     supply: number;
     marketCap?: number;
     pricePerToken?: string;
@@ -44,4 +36,3 @@ export interface TokenInfoType {
     };
   }
   
->>>>>>> Stashed changes
