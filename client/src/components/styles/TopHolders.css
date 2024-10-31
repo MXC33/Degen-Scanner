@@ -1,0 +1,29 @@
+/* client/src/components/styles/TopHolders.css */
+
+.top-holders-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #473d3d;
+}
+
+.top-holders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.top-holders-table th,
+.top-holders-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.top-holders-table th {
+  background-color: #4d4242;
+}
+
+.owner-address {
+  font-family: monospace;
+}

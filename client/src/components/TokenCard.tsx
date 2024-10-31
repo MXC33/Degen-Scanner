@@ -1,18 +1,9 @@
 // client/src/components/TokenCard.tsx
 
-import React from "react";
+import React, { useState } from "react";
+import TopHolders from "./TopHolders"; // Import the new component
 import "./styles/TokenCard.css";
-
-interface TokenInfo {
-  mintAddress: string;
-  holderCount: number;
-  metadata: {
-    name: string;
-    symbol: string;
-    description: string;
-    image: string;
-  };
-}
+import { TokenInfo } from "../types/types"; // Import shared types
 
 interface TokenCardProps {
   info: TokenInfo;
@@ -27,6 +18,12 @@ const TokenCard: React.FC<TokenCardProps> = ({
   onSelect,
   onRemove,
 }) => {
+  const [showTopHolders, setShowTopHolders] = useState(false); // New state
+
+  const toggleTopHolders = () => {
+    setShowTopHolders((prev) => !prev);
+  };
+
   return (
     <div
       className={`token-card ${isSelected ? "selected" : ""}`}
@@ -55,6 +52,20 @@ const TokenCard: React.FC<TokenCardProps> = ({
       </p>
       <p>{info.metadata.name}</p>
       <p>Holders: {info.holderCount}</p>
+
+      {/* New Button to Toggle Top Holders */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleTopHolders();
+        }}
+        className="show-top-holders-button"
+      >
+        {showTopHolders ? "Hide Top Holders" : "Show Top Holders"}
+      </button>
+
+      {/* Conditionally Render TopHolders */}
+      {showTopHolders && <TopHolders topHolders={info.topHolders} />}
     </div>
   );
 };

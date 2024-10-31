@@ -1,17 +1,7 @@
 // client/src/hooks/useFetchToken.ts
 
 import { useState } from "react";
-
-interface TokenInfo {
-  mintAddress: string;
-  holderCount: number;
-  metadata: {
-    name: string;
-    symbol: string;
-    description: string;
-    image: string;
-  };
-}
+import { TokenInfo } from "../types/types"; // Import types from centralized file
 
 interface FetchResult {
   tokens: TokenInfo[];
@@ -46,7 +36,14 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
         const errorData = await response.json();
         throw new Error(errorData.error || "Failed to fetch token information");
       }
+
       const data = await response.json();
+
+      // Ensure that holders and topHolders are present
+      if (!data.holders || !data.topHolders) {
+        throw new Error("Incomplete data received from the server.");
+      }
+
       const tokenData: TokenInfo = {
         mintAddress: data.mintAddress || address,
         holderCount: data.holderCount || 0,
@@ -56,7 +53,10 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
           description: data.metadata.description || "No Description",
           image: data.metadata.image || "",
         },
+        topHolders: data.topHolders, // Populate with actual data
+        holders: data.holders, // Populate with actual data
       };
+
       setTokens((prevTokens) => [...prevTokens, tokenData]);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));

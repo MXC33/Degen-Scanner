@@ -17,6 +17,8 @@ const fetchTokenInfo = async (req, res) => {
     res.json({
       mintAddress,
       holderCount: tokenInfo.holderCount,
+      holders: tokenInfo.holders,
+      topHolders: tokenInfo.topHolders, // Include topHolders
       metadata: tokenInfo.metadata,
     });
   } catch (error) {
@@ -27,7 +29,6 @@ const fetchTokenInfo = async (req, res) => {
     });
   }
 };
-
 // Controller to compare two tokens
 const compareTokens = async (req, res) => {
   try {
@@ -71,9 +72,7 @@ const compareTokens = async (req, res) => {
   }
 };
 
-
 module.exports = {
   fetchTokenInfo,
   compareTokens,
-
 };

@@ -1,3 +1,5 @@
+// server/src/services/tokenHolders.js
+
 const fetch = require("node-fetch");
 const { LRUCache } = require("lru-cache"); // Updated import for v11.x
 
@@ -11,7 +13,6 @@ const cache = new LRUCache({
 const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 async function getTokenHolders(apiKey, mintAddress, retries = 3) {
-  // Added 'retries' parameter
   const cacheKey = `holders_${mintAddress}`; // Unique cache key for holders
 
   // **Start of Caching Logic**
@@ -66,18 +67,59 @@ async function getTokenHolders(apiKey, mintAddress, retries = 3) {
 
     const accounts = data.result;
 
-    const holders = accounts
+    // Extract owner and amount
+    const holderAmounts = accounts
       .filter((account) => {
         const amount = account.account.data.parsed.info.tokenAmount.uiAmount;
         return amount > 0;
       })
-      .map((account) => account.account.data.parsed.info.owner);
+      .map((account) => ({
+        owner: account.account.data.parsed.info.owner,
+        amount: account.account.data.parsed.info.tokenAmount.uiAmount,
+      }));
 
-    const uniqueHolders = [...new Set(holders)];
+    // Aggregate by owner
+    const holderMap = new Map();
+
+    holderAmounts.forEach(({ owner, amount }) => {
+      if (holderMap.has(owner)) {
+        holderMap.set(owner, holderMap.get(owner) + amount);
+      } else {
+        holderMap.set(owner, amount);
+      }
+    });
+
+    // Convert to array
+    const holdersArray = Array.from(holderMap, ([owner, amount]) => ({
+      owner,
+      amount,
+    }));
+
+    const holderCount = holdersArray.length;
+
+    // Compute total supply
+    const totalSupply = holdersArray.reduce(
+      (sum, holder) => sum + holder.amount,
+      0
+    );
+
+    // Sort descending by amount
+    holdersArray.sort((a, b) => b.amount - a.amount);
+
+    // Take top 10
+    const topHolders = holdersArray.slice(0, 10).map((holder, index) => ({
+      rank: index + 1,
+      owner: holder.owner,
+      amount: holder.amount,
+      percentage: ((holder.amount / totalSupply) * 100).toFixed(2),
+    }));
+
+    const uniqueHolders = holdersArray.map((h) => h.owner);
 
     const result = {
-      holderCount: uniqueHolders.length,
+      holderCount,
       holders: uniqueHolders,
+      topHolders,
     };
 
     // **Start of Caching Logic**
@@ -188,6 +230,7 @@ async function getTokenInfo(apiKey, mintAddress) {
   return {
     holderCount: holderInfo.holderCount,
     holders: holderInfo.holders,
+    topHolders: holderInfo.topHolders, // Include topHolders
     metadata,
   };
 }
