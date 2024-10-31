@@ -1,25 +1,31 @@
 // client/src/hooks/useFetchToken.ts
 
 import { useState } from "react";
+<<<<<<< Updated upstream
 import { TokenInfo } from "../types/types"; // Import types from centralized file
+=======
+import { TokenInfoType } from "../types/types";
+
+
+>>>>>>> Stashed changes
 
 interface FetchResult {
-  tokens: TokenInfo[];
+  tokens: TokenInfoType[];
   loading: boolean;
   error: string | null;
   fetchTokenInfo: (address: string) => Promise<void>;
-  selectedTokens: TokenInfo[];
-  selectToken: (info: TokenInfo) => void;
-  removeToken: (info: TokenInfo) => void;
+  selectedTokens: TokenInfoType[];
+  selectToken: (info: TokenInfoType) => void;
+  removeToken: (info: TokenInfoType) => void;
   commonHoldersCount: number | null;
   loadingComparison: boolean;
 }
 
 const useFetchToken = (apiBaseUrl: string): FetchResult => {
-  const [tokens, setTokens] = useState<TokenInfo[]>([]);
+  const [tokens, setTokens] = useState<TokenInfoType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedTokens, setSelectedTokens] = useState<TokenInfo[]>([]);
+  const [selectedTokens, setSelectedTokens] = useState<TokenInfoType[]>([]);
   const [commonHoldersCount, setCommonHoldersCount] = useState<number | null>(
     null
   );
@@ -39,6 +45,7 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
 
       const data = await response.json();
 
+<<<<<<< Updated upstream
       // Ensure that holders and topHolders are present
       if (!data.holders || !data.topHolders) {
         throw new Error("Incomplete data received from the server.");
@@ -56,6 +63,25 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
         topHolders: data.topHolders, // Populate with actual data
         holders: data.holders, // Populate with actual data
       };
+=======
+      console.log("Fetched token data:", data);
+
+
+     const tokenData: TokenInfoType = {
+      mintAddress: data.mintAddress,
+      holderCount: data.holderCount,
+      marketCap: data.metadata.marketCap,
+      pricePerToken: data.metadata.pricePerToken,
+      supply: data.metadata.supply, // add supply
+      metadata: {
+        name: data.metadata.name,
+        symbol: data.metadata.symbol,
+        description: data.metadata.description,
+        image: data.metadata.image,
+      },
+      links: data.metadata.links, // Assuming links are provided by the API
+};
+>>>>>>> Stashed changes
 
       setTokens((prevTokens) => [...prevTokens, tokenData]);
     } catch (err) {
@@ -63,9 +89,10 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
     } finally {
       setLoading(false);
     }
+    
   };
 
-  const selectToken = async (info: TokenInfo) => {
+  const selectToken = async (info: TokenInfoType) => {
     if (selectedTokens.includes(info)) {
       // Deselect token
       setSelectedTokens((prevSelected) =>
@@ -95,7 +122,7 @@ const useFetchToken = (apiBaseUrl: string): FetchResult => {
     }
   };
 
-  const removeToken = (info: TokenInfo) => {
+  const removeToken = (info: TokenInfoType) => {
     // Remove the token from the tokens list
     setTokens((prevTokens) => prevTokens.filter((token) => token !== info));
     // Deselect the token if it's selected

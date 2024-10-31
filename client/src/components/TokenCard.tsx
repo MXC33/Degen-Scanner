@@ -1,15 +1,24 @@
+<<<<<<< Updated upstream
 // client/src/components/TokenCard.tsx
 
 import React, { useState } from "react";
 import TopHolders from "./TopHolders"; // Import the new component
 import "./styles/TokenCard.css";
 import { TokenInfo } from "../types/types"; // Import shared types
+=======
+import React from "react";
+import "./styles/TokenCard.css";
+import { TokenInfoType } from "../types/types";
+import { formatSmallNumber, formatLargeNumber } from "../utilities/formatNumber"; // Import utilities
+
+
+>>>>>>> Stashed changes
 
 interface TokenCardProps {
-  info: TokenInfo;
+  info: TokenInfoType;
   isSelected: boolean;
-  onSelect: (info: TokenInfo) => void;
-  onRemove: (info: TokenInfo) => void;
+  onSelect: (info: TokenInfoType) => void;
+  onRemove: (info: TokenInfoType) => void;
 }
 
 const TokenCard: React.FC<TokenCardProps> = ({
@@ -47,6 +56,7 @@ const TokenCard: React.FC<TokenCardProps> = ({
           className="token-info-image"
         />
       )}
+<<<<<<< Updated upstream
       <p>
         <strong>{info.metadata.symbol}</strong>
       </p>
@@ -66,6 +76,32 @@ const TokenCard: React.FC<TokenCardProps> = ({
 
       {/* Conditionally Render TopHolders */}
       {showTopHolders && <TopHolders topHolders={info.topHolders} />}
+=======
+      <p className="token-symbol">{info.metadata.symbol}</p>
+      <div className="token-details">
+        <p>{info.metadata.name}</p>
+        <p>Holders: {info.holderCount}</p>
+        {info.marketCap && <p>Market Cap: ${formatLargeNumber(info.marketCap)}</p>} 
+        {info.pricePerToken && <p>Price per Token: {formatSmallNumber(parseFloat(info.pricePerToken))} USDC</p>}
+      </div>
+      <div className="social-links">
+        {info.links?.discord && (
+          <a href={info.links.discord} target="_blank" rel="noopener noreferrer">
+            Discord
+          </a>
+        )}
+        {info.links?.twitter && (
+          <a href={info.links.twitter} target="_blank" rel="noopener noreferrer">
+            Twitter
+          </a>
+        )}
+        {info.links?.website && (
+          <a href={info.links.website} target="_blank" rel="noopener noreferrer">
+            Website
+          </a>
+        )}
+      </div>
+>>>>>>> Stashed changes
     </div>
   );
 };

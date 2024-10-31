@@ -1,70 +1,63 @@
 // server/src/services/tokenHolders.js
 
 const fetch = require("node-fetch");
-const { LRUCache } = require("lru-cache"); // Updated import for v11.x
+const { LRUCache } = require("lru-cache");
 
-// Initialize LRU Cache
 const cache = new LRUCache({
-  max: 500, // Maximum number of items in cache
-  ttl: 1000 * 60 * 60, // Time to live in milliseconds (1 hour)
+  max: 500, 
+  ttl: 1000 * 60 * 60, 
 });
 
-// Solana's Token Program ID (SPL Token Program)
 const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
+<<<<<<< Updated upstream
 async function getTokenHolders(apiKey, mintAddress, retries = 3) {
   const cacheKey = `holders_${mintAddress}`; // Unique cache key for holders
 
   // **Start of Caching Logic**
+=======
+async function getTokenHolders(apiKey, mintAddress, retries = 3, delayMs = 1000) {
+  const cacheKey = `holders_${mintAddress}`;
+>>>>>>> Stashed changes
   if (cache.has(cacheKey)) {
-    console.log(`[Cache Hit] Holders for ${mintAddress}`);
     return cache.get(cacheKey);
-  } else {
-    console.log(`[Cache Miss] Holders for ${mintAddress}`);
   }
-  // **End of Caching Logic**
 
-  const url = `https://rpc.helius.xyz/?api-key=${apiKey}`;
+  const url = `https://mainnet.helius-rpc.com/?api-key=${apiKey}`;
 
   try {
-    const requestBody = {
-      jsonrpc: "2.0",
-      id: 1,
-      method: "getProgramAccounts",
-      params: [
-        TOKEN_PROGRAM_ID,
-        {
-          encoding: "jsonParsed",
-          filters: [
-            { dataSize: 165 }, // Size of SPL Token Account
-            {
-              memcmp: {
-                offset: 0, // Mint address starts at offset 0
-                bytes: mintAddress,
-              },
-            },
-          ],
-        },
-      ],
-    };
-
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "fetchHolders",
+        method: "getProgramAccounts",
+        params: [
+          TOKEN_PROGRAM_ID,
+          {
+            encoding: "jsonParsed",
+            filters: [
+              { dataSize: 165 },
+              { memcmp: { offset: 0, bytes: mintAddress } },
+            ],
+          },
+        ],
+      }),
     });
 
     const data = await response.json();
-
+    
     if (data.error) {
       if (data.error.message.includes("Rate limit exceeded") && retries > 0) {
-        console.warn("Rate limit exceeded. Retrying after delay...");
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
-        return getTokenHolders(apiKey, mintAddress, retries - 1);
+        console.warn("Rate limit exceeded. Retrying...");
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+        return getTokenHolders(apiKey, mintAddress, retries - 1, delayMs * 2);
       }
       throw new Error(`RPC Error: ${data.error.message}`);
     }
 
+<<<<<<< Updated upstream
     const accounts = data.result;
 
     // Extract owner and amount
@@ -128,6 +121,14 @@ async function getTokenHolders(apiKey, mintAddress, retries = 3) {
     // **End of Caching Logic**
 
     return result;
+=======
+    const holders = data.result
+      .filter(account => account.account.data.parsed.info.tokenAmount.uiAmount > 0)
+      .map(account => account.account.data.parsed.info.owner);
+    const uniqueHolders = [...new Set(holders)];
+    cache.set(cacheKey, uniqueHolders);
+    return uniqueHolders;
+>>>>>>> Stashed changes
   } catch (error) {
     console.error("Error fetching token holders:", error);
     throw error;
@@ -135,86 +136,64 @@ async function getTokenHolders(apiKey, mintAddress, retries = 3) {
 }
 
 async function getTokenMetadata(apiKey, mintAddress, retries = 3) {
-  // Added 'retries' parameter
-  const cacheKey = `metadata_${mintAddress}`; // Unique cache key for metadata
-
-  // **Start of Caching Logic**
+  const cacheKey = `metadata_${mintAddress}`;
   if (cache.has(cacheKey)) {
-    console.log(`[Cache Hit] Metadata for ${mintAddress}`);
     return cache.get(cacheKey);
-  } else {
-    console.log(`[Cache Miss] Metadata for ${mintAddress}`);
   }
-  // **End of Caching Logic**
 
-  const url = `https://api.helius.xyz/v0/token-metadata?api-key=${apiKey}`;
+  const url = `https://mainnet.helius-rpc.com/?api-key=${apiKey}`;
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        mintAccounts: [mintAddress],
-        includeOffChain: true,
-        disableCache: false,
+        jsonrpc: "2.0",
+        id: "getAsset",
+        method: "getAsset",
+        params: { id: mintAddress },
       }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`
-        HTTP error! status: ${response.status}, message: ${errorText}
-      `);
-    }
-
     const data = await response.json();
-
-    if (data && data.length > 0) {
-      const metadata = data[0];
-
-      let image = metadata.offChainMetadata?.metadata?.image || "No Image";
-
-      // Fetch image from IPFS if necessary
-      if (image && image.startsWith("ipfs://")) {
-        image = image.replace("ipfs://", "https://ipfs.io/ipfs/");
-      }
-
-      const result = {
-        name:
-          metadata.onChainMetadata?.metadata?.data?.name ||
-          metadata.offChainMetadata?.metadata?.name ||
-          "Unknown",
-        symbol:
-          metadata.onChainMetadata?.metadata?.data?.symbol ||
-          metadata.offChainMetadata?.metadata?.symbol ||
-          "Unknown",
-        image: image,
-        description:
-          metadata.offChainMetadata?.metadata?.description || "No Description",
-      };
-
-      // **Start of Caching Logic**
-      cache.set(cacheKey, result); // Set data in cache
-      console.log(`[Cache Set] Metadata for ${mintAddress}`);
-
-      // **End of Caching Logic**
-
-      return result;
+    console.log("API response data:", data);
+    if (data.error) {
+      throw new Error(`Error fetching metadata: ${data.error.message}`);
     }
 
-    const fallback = {
-      name: "Unknown",
-      symbol: "Unknown",
-      image: "No Image",
-      description: "No Description",
+    // Extract metadata and other data
+    const metadata = data.result.content.metadata;
+    const decimals = data.result.token_info.decimals || 0;
+    const rawSupply = data.result.token_info.supply || 1;
+    const supply = rawSupply / Math.pow(10, decimals); // Adjust supply based on decimals
+    const pricePerToken = data.result.token_info.price_info?.price_per_token || null;
+    const currency = data.result.token_info.price_info?.currency || "USD";
+
+    // Calculate market cap if pricePerToken is available
+    const marketCap = pricePerToken ? pricePerToken * supply : null;
+
+    // Extract links if available
+    const links = data.result.content.links || {}; // Safely handle links
+
+    // Final structured metadata
+    const result = {
+      name: metadata.name || "Unknown",
+      symbol: metadata.symbol || "Unknown",
+      image: links.image || "No Image",
+      description: metadata.description || "No Description",
+      pricePerToken: pricePerToken ? `${pricePerToken} ${currency}` : "N/A",
+      marketCap: marketCap || "N/A",
+      supply: supply, // Adjusted supply
+      links: links,
     };
 
-    // **Start of Caching Logic**
-    cache.set(cacheKey, fallback); // Set fallback in cache
-    console.log(`[Cache Set] Metadata fallback for ${mintAddress}`);
-    // **End of Caching Logic**
+    console.log("Adjusted supply:", supply);
+    console.log("Price per token:", pricePerToken);
 
-    return fallback;
+    console.log("Market Cap:", marketCap);
+
+    cache.set(cacheKey, result);
+    return result;
   } catch (error) {
     console.error("Error fetching token metadata:", error);
     throw error;
@@ -228,9 +207,14 @@ async function getTokenInfo(apiKey, mintAddress) {
   ]);
 
   return {
+<<<<<<< Updated upstream
     holderCount: holderInfo.holderCount,
     holders: holderInfo.holders,
     topHolders: holderInfo.topHolders, // Include topHolders
+=======
+    holderCount: holderInfo.length,
+    holders: holderInfo,
+>>>>>>> Stashed changes
     metadata,
   };
 }

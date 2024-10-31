@@ -1,6 +1,7 @@
 /* client/src/components/styles/TokenCard.css */
 
 .token-card {
+<<<<<<< Updated upstream
   /* existing styles */
   position: relative;
   padding: 20px;
@@ -9,6 +10,25 @@
   background-color: #312d2d;
   margin: 10px;
   cursor: pointer;
+=======
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  width: 250px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.token-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+>>>>>>> Stashed changes
 }
 
 .token-card.selected {
@@ -17,9 +37,13 @@
 }
 
 .card-header {
+<<<<<<< Updated upstream
   position: absolute;
   top: 10px;
   right: 10px;
+=======
+  align-self: flex-end;
+>>>>>>> Stashed changes
 }
 
 .remove-button {
@@ -30,6 +54,7 @@
 }
 
 .token-info-image {
+<<<<<<< Updated upstream
   width: 50px;
   height: 50px;
   object-fit: contain;
@@ -47,4 +72,46 @@
 
 .show-top-holders-button:hover {
   background-color: #0056b3;
+=======
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* Center-align only the symbol text */
+.token-symbol {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+/* Left-align the rest of the details */
+.token-details {
+  text-align: left;
+  width: 100%;
+  padding: 0 10px;
+  font-size: 0.9em;
+  margin-top: 10px;
+}
+
+.token-details p {
+  margin: 5px 0;
+}
+
+/* Social links styling */
+.social-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.social-links a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  text-decoration: underline;
+>>>>>>> Stashed changes
 }

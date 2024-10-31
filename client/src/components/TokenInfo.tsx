@@ -5,6 +5,7 @@ import TokenCard from "./TokenCard";
 import CombinedInfo from "./CombinedInfo";
 import TokenAccounts from "./TokenAccounts";
 import TrendingTokens from "./TrendingTokens";
+
 import useFetchToken from "../hooks/useFetchToken";
 import "./styles/TokenInfo.css";
 import WalletConnectButton from "./WalletConnectButton";
@@ -12,18 +13,9 @@ import WalletConnectButton from "./WalletConnectButton";
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
-interface TokenInfo {
-  mintAddress: string;
-  holderCount: number;
-  metadata: {
-    name: string;
-    symbol: string;
-    description: string;
-    image: string;
-  };
-}
 
-export default function TokenInfo() {
+
+export default function TokenInfoComponent() {
   const {
     tokens,
     loading,
@@ -44,6 +36,7 @@ export default function TokenInfo() {
   const handleFetchToken = () => {
     if (mintAddress.trim() !== "") {
       fetchTokenInfo(mintAddress.trim());
+      console.log("Tokens after fetch:", tokens); // Check the tokens state here
       setMintAddress(""); // Clear input after fetching
     }
   };
